@@ -1,5 +1,7 @@
 package com.cpham.lab1_android;
 
+import android.content.Intent;
+import android.preference.PreferenceActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, PreferenceActivity.class);
+            startActivity(i);
+            //displayView(1);
             return true;
         }
 
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         switch (position) {
             case 0:
                 fragment = new MainFragment();
+                break;
+            case 1:
                 break;
             default:
                 break;
