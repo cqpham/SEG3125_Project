@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         //Set up tool bar
         mainToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mainToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //display first fragment view on activity
         displayView(0);
