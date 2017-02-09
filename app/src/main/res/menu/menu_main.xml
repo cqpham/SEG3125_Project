@@ -8,5 +8,5 @@
         android:id="@+id/action_settings"
         android:title="@string/settings_menu"
         android:orderInCategory="1"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 </menu>
