@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent i = new Intent(this, PreferenceActivity.class);
-            startActivity(i);
             //displayView(1);
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new MainFragment();
                 break;
             case 1:
+                fragment = new SettingsFragment();
                 break;
             default:
                 break;
