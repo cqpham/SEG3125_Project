@@ -30,4 +30,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:preference-v7:25.1.1'
     compile 'com.android.support:preference-v14:25.1.1'
+    /*
+    changed from 25.1.1 for TextInputLayout and EditText for setting default text to work...
+    see : https://code.google.com/p/android/issues/detail?id=230171
+     */
+    compile 'com.android.support:design:25.0.1'
 }

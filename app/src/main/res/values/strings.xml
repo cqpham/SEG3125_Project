@@ -5,13 +5,14 @@
     <string name="tip_suggest">Tip Suggestion</string>
     <string name="total_trip_distance">Total trip distance</string>
     <string name="tip_percent">Tip percentage (%)</string>
-    <string name="default_tip">10%</string>
+    <string name="default_tip">10</string>
     <string-array name="distance_measure_array">
         <item>km</item>
         <item>mil</item>
     </string-array>
     <string name="num_people_paying">Number of people paying</string>
     <string name="calculate">Calculate</string>
+    <string name="num_people_paying_default">1</string>
 
 
     <string-array name="listArray">
