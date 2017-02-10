@@ -96,6 +96,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -103,12 +104,12 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="60dp"
         android:focusableInTouchMode="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="30dp">
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_totalDistance"
                 android:layout_width="0dp"
@@ -132,7 +133,8 @@
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_tipPercent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp">
 
             <EditText
                 android:id="@+id/input_tipPercent"
@@ -146,28 +148,51 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="-"
-                android:id="@+id/subPayee"/>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="60dp">
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:text="@string/num_people_paying"
                 android:textSize="16sp"
-                android:text="@string/num_people_paying_default"/>
-
-            <Button
-                android:layout_width="0dp"
+                android:layout_marginBottom="8dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="+"
-                android:id="@+id/addPayee"/>
+                android:orientation="horizontal"
+                android:gravity="center">
+                <ImageButton
+                    android:layout_width="88dp"
+                    android:layout_height="wrap_content"
+                    android:minWidth="88dp"
+                    android:src="@drawable/ic_remove_black_24dp"
+                    android:id="@+id/subPayee"/>
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:text="@string/num_people_paying_default"/>
+
+                <ImageButton
+                    android:layout_width="88dp"
+                    android:minWidth="88dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:id="@+id/addPayee" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="@string/calculate"
+                android:textStyle="bold"/>
         </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

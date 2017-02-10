@@ -10,10 +10,9 @@
         <item>km</item>
         <item>mil</item>
     </string-array>
-    <string name="num_people_paying">Number of people paying</string>
-    <string name="calculate">Calculate</string>
+    <string name="num_people_paying">How many people will be paying?</string>
+    <string name="calculate">CALCULATE</string>
     <string name="num_people_paying_default">1</string>
-
 
     <string-array name="listArray">
         <item>Headings</item>
