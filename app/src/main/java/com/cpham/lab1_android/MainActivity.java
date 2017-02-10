@@ -1,7 +1,7 @@
 package com.cpham.lab1_android;
 
 import android.content.Intent;
-import android.preference.PreferenceActivity;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,10 +10,19 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mainToolbar;
+    private TextInputLayout inputLayoutTipPercent, inputLayoutTotalDistance;
+    private EditText inputTipPercent, inputTotalDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
         mainToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mainToolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        inputLayoutTipPercent = (TextInputLayout) findViewById(R.id.input_layout_tipPercent);
+        inputLayoutTotalDistance = (TextInputLayout) findViewById(R.id.input_layout_totalDistance);
+        inputTipPercent = (EditText) findViewById(R.id.input_tipPercent);
+        inputTotalDistance = (EditText) findViewById(R.id.input_totalDistance);
 
         //display first fragment view on activity
         displayView(0);
