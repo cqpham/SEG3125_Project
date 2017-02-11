@@ -12,6 +12,7 @@
     </string-array>
     <string name="num_people_paying">How many people will be paying?</string>
     <string name="calculate">CALCULATE</string>
+    <string name="reset">RESET</string>
     <string name="num_people_paying_default">1</string>
     <string name="summary_title">Summary</string>
     <string name="total_amount_title">Total Amount</string>
@@ -20,6 +21,7 @@
     <string name="total_trip_cost">Total Trip Cost</string>
     <string name="total_tip_cost">Total Tip Cost</string>
     <string name="price_per_payee">Price Per Payee</string>
+    <string name="calculate_again">CALCULATE FOR ANOTHER TRIP</string>
 
     <string-array name="currency_array">
         <item>US Dollar</item>

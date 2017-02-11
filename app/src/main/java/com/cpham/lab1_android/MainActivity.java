@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -34,6 +35,21 @@ public class MainActivity extends AppCompatActivity {
         inputTipPercent = (EditText) findViewById(R.id.input_tipPercent);
         inputTotalDistance = (EditText) findViewById(R.id.input_totalDistance);
 
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show back button
+                    mainToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onBackPressed();
+                        }
+                    });
+                }
+            }
+        });
+
         //display first fragment view on activity
         displayView(0);
     }
@@ -54,12 +70,15 @@ public class MainActivity extends AppCompatActivity {
          */
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            //displayView(1);
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.fragment_summary:
+                onBackPressed();
+                //getSupportFragmentManager().popBackStack();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -67,26 +86,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayView(int position) {
         Fragment fragment = null;
+        String fragmentName = "";
 
         switch (position) {
             case 0:
                 fragment = new MainFragment();
+                fragmentName = "main";
                 break;
             case 1:
                 fragment = new SettingsFragment();
                 break;
             case 2:
                 fragment = new SummaryFragment();
+                fragmentName = "summary";
                 break;
             default:
                 break;
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_body, fragment);
-            fragmentTransaction.commit();
+            /*
+            Replace container_body layout with fragment and add it to activity back stack
+            Press the back button at the bottom of screen to go back
+             */
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container_body, fragment, fragmentName)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 
@@ -94,5 +120,12 @@ public class MainActivity extends AppCompatActivity {
         //display summary view fragment
         displayView(2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public void displayMain(View view) {
+        //display main view fragment
+        displayView(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
     }
 }
