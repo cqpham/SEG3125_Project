@@ -11,12 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 fragment = new SettingsFragment();
                 break;
+            case 2:
+                fragment = new SummaryFragment();
+                break;
             default:
                 break;
         }
@@ -90,5 +88,11 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.container_body, fragment);
             fragmentTransaction.commit();
         }
+    }
+
+    public void displaySummary(View view) {
+        //display summary view fragment
+        displayView(2);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

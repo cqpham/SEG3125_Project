@@ -17,16 +17,14 @@
     <string name="total_amount_title">Total Amount</string>
     <string name="default_amount">$0.00</string>
     <string name="dollar_sign">$</string>
+    <string name="total_trip_cost">Total Trip Cost</string>
+    <string name="total_tip_cost">Total Tip Cost</string>
+    <string name="price_per_payee">Price Per Payee</string>
 
-    <string-array name="listArray">
-        <item>Headings</item>
-        <item>Headings and Details</item>
-        <item>All Data</item>
-    </string-array>
-
-    <string-array name="listValues">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+    <string-array name="currency_array">
+        <item>US Dollar</item>
+        <item>Canadian Dollar</item>
+        <item>Euro</item>
+        <item>Pound</item>
     </string-array>
 </resources>
