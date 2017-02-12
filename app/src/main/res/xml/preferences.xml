@@ -24,4 +24,10 @@
             android:defaultValue="true"/>
     </android.support.v7.preference.PreferenceCategory>
 
+    <android.support.v7.preference.EditTextPreference
+        android:key="pref_default_tip_percent"
+        android:title="@string/default_tip_percentage_title"
+        android:summary="@string/default_tip_percentage_title"
+        android:defaultValue="@string/default_tip"/>
+
 </android.support.v7.preference.PreferenceScreen>

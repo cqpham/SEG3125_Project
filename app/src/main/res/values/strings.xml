@@ -22,6 +22,7 @@
     <string name="total_tip_cost">Total Tip Cost</string>
     <string name="price_per_payee">Price Per Payee</string>
     <string name="calculate_again">CALCULATE FOR ANOTHER TRIP</string>
+    <string name="default_tip_percentage_title">Default tip percentage (%)</string>
 
     <string-array name="currency_array">
         <item>US Dollar</item>

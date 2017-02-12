@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             public void onBackStackChanged() {
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     int size = getSupportFragmentManager().getBackStackEntryCount();
-                    if (getSupportFragmentManager().getBackStackEntryAt(size - 1).getName() == "main") {
+                    if (getSupportFragmentManager().getBackStackEntryAt(size - 1).getName().equals("main")) {
                         disableUpButton(); //hide back button
                     } else {
                         enableUpButton(); //show back button
