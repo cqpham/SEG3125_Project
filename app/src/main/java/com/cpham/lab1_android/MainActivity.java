@@ -28,18 +28,25 @@ public class MainActivity extends AppCompatActivity {
         //Set up tool bar
         mainToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mainToolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputLayoutTipPercent = (TextInputLayout) findViewById(R.id.input_layout_tipPercent);
         inputLayoutTotalDistance = (TextInputLayout) findViewById(R.id.input_layout_totalDistance);
         inputTipPercent = (EditText) findViewById(R.id.input_tipPercent);
         inputTotalDistance = (EditText) findViewById(R.id.input_totalDistance);
 
+        //display first fragment view on activity
+        displayView(0);
+
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show back button
+                    int size = getSupportFragmentManager().getBackStackEntryCount();
+                    if (getSupportFragmentManager().getBackStackEntryAt(size - 1).getName() == "main") {
+                        disableUpButton(); //hide back button
+                    } else {
+                        enableUpButton(); //show back button
+                    }
                     mainToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -49,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //display first fragment view on activity
-        displayView(0);
     }
 
     @Override
@@ -74,10 +78,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
-                return true;
-            case R.id.fragment_summary:
-                onBackPressed();
-                //getSupportFragmentManager().popBackStack();
                 return true;
         }
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
              */
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container_body, fragment, fragmentName)
-                    .addToBackStack(null)
+                    .addToBackStack(fragmentName)
                     .commit();
         }
     }
@@ -119,13 +119,21 @@ public class MainActivity extends AppCompatActivity {
     public void displaySummary(View view) {
         //display summary view fragment
         displayView(2);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        enableUpButton();
     }
 
     public void displayMain(View view) {
         //display main view fragment
         displayView(0);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        disableUpButton();
 
+    }
+
+    private void enableUpButton() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void disableUpButton() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 }
