@@ -1,7 +1,9 @@
 package com.cpham.lab1_android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.audiofx.BassBoost;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +14,11 @@ import android.view.MenuItem;
 
 import static com.cpham.lab1_android.R.xml.preferences;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements SettingsFragment.OnItemCheckedListener {
+
+    public static final String PREFS_NAME = "pref_file";
     private Toolbar mainToolbar;
+    private SettingsFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,34 @@ public class SettingsActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.settings_body, preferenceFragment);
             fragmentTransaction.commit();
         }
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //get access to preferences fragment by id
+        fragment = (SettingsFragment) getSupportFragmentManager().findFragmentById(R.id.pref_fragment);
+        
+
     }
+
+    @Override
+    public void onItemChecked() {
+        if (fragment != null && fragment.isInLayout()) {
+
+        }
+    }
+
+/*    @Override
+    protected void onStop(){
+        super.onStop();
+
+        // We need an Editor object to make preference changes.
+        // All objects are from android.context.Context
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+
+        // Commit the edits!
+        editor.commit();
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -47,4 +79,24 @@ public class SettingsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public SharedPreferences getDefaults() {
+        SharedPreferences preferences;
+        //preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences;
+    }
+
+
+    /*public static String getDefaults() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, null);
+    }
+
+    public static void setDefaults(String key, String value, Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }*/
 }

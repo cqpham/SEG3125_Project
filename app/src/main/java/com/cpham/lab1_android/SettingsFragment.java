@@ -1,13 +1,18 @@
 package com.cpham.lab1_android;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceManager;
+import android.widget.EditText;
 //import android.support.v7.preference.PreferenceFragmentCompat;
 import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
+import android.view.View;
 
 import java.util.Map;
 
@@ -15,14 +20,32 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
 
     SharedPreferences sharedPreferences;
 
+    private OnItemCheckedListener listener;
+
     public SettingsFragment() {
 
+    }
+
+    public interface OnItemCheckedListener {
+        public void onItemChecked();
     }
 
     @Override
     public void onCreatePreferencesFix (Bundle bundle, String s) {
         //Load preferences from preferences.xml
         addPreferencesFromResource(R.xml.preferences);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof OnItemCheckedListener) {
+            listener = (OnItemCheckedListener) context;
+        } else {
+            throw new ClassCastException(context.toString()
+                    + " must implement SettingsFragment.OnItemCheckedListener");
+        }
     }
 
     @Override
@@ -62,12 +85,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         updatePreferences(preference);
     }
 
+    public void onCheck(View v) {
+        listener.onItemChecked();
+    }
+
     private void updatePreferences(Preference preference) {
         // and if it's an instance of EditTextPreference class, update its summary
         if (preference instanceof EditTextPreference) {
             updateEditTextSummary((EditTextPreference) preference);
         } else if (preference  instanceof ListPreference) {
             updateListSummary((ListPreference) preference);
+        } else if (preference instanceof CheckBoxPreference) {
+            updateCheckBoxSummary((CheckBoxPreference) preference);
         }
     }
 
@@ -78,5 +107,25 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
 
     private void updateListSummary (ListPreference preference) {
         preference.setSummary(preference.getEntry());
+    }
+
+    private void updateCheckBoxSummary(CheckBoxPreference preference) {
+
+        /*FragmentManager fm = getFragmentManager();
+        MainFragment fragment = (MainFragment) fm.findFragmentById(R.id.fragment_main);
+        fragment.setDefaultTipPercentage();*/
+
+        /*EditText txtTipPercentage = (EditText) getView().findViewById(R.id.input_tipPercent);
+        TextInputLayout txtLayout = (TextInputLayout) getView().findViewById(R.id.input_layout_tipPercent);
+        EditTextPreference editTextPreference = (EditTextPreference) findPreference("@string/pref_default_tip_percent");
+
+        if (preference.isChecked()) {
+            //add default tip percentage
+            txtTipPercentage.setText(editTextPreference.getText());
+        } else {
+            //remove default tip percentage
+            txtTipPercentage.setText("");
+            txtLayout.setErrorEnabled(false);
+        }*/
     }
 }

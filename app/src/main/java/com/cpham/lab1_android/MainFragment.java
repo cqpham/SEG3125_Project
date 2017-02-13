@@ -1,19 +1,18 @@
 package com.cpham.lab1_android;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class MainFragment extends FragmentManager {
 
@@ -21,6 +20,9 @@ public class MainFragment extends FragmentManager {
     private EditText editTxtTotalDistance, editTxtTipPercentage;
     private TextInputLayout txtLayoutTotalDistance, txtLayoutTipPercentage;
     private Button btnCalculate, btnReset;
+    private TextView txtViewNumPayees;
+
+    private SharedPreferences sharedPreferences;
 
     public MainFragment() {
         super();
@@ -42,13 +44,20 @@ public class MainFragment extends FragmentManager {
         txtLayoutTipPercentage = (TextInputLayout) view.findViewById(R.id.input_layout_tipPercent);
         btnCalculate = (Button) view.findViewById(R.id.calculate_trip);
         btnReset = (Button) view.findViewById(R.id.reset_trip);
+        txtViewNumPayees = (TextView) view.findViewById(R.id.input_num_payees);
+
+        //get preferences
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         addListenerAddBtn();
         addListenerDelBtn();
         editTxtTotalDistance.addTextChangedListener(new CustomTextWatcher(editTxtTotalDistance));
         editTxtTipPercentage.addTextChangedListener(new CustomTextWatcher(editTxtTipPercentage));
-        //addListenerResetBtn();
+        addListenerResetBtn();
         addListenerCalBtn();
+
+        //initialize tip percentage based on preference
+        setDefaultTipPercentage();
 
         return view;
     }
@@ -57,11 +66,10 @@ public class MainFragment extends FragmentManager {
         btnAddPayee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView txtNumPayees = (TextView) getView().findViewById(R.id.input_num_payees);
-                int value = Integer.parseInt(txtNumPayees.getText().toString());
+                int value = Integer.parseInt(txtViewNumPayees.getText().toString());
                 if (value < 10) {
                     value++;
-                    txtNumPayees.setText(String.valueOf(value));
+                    txtViewNumPayees.setText(String.valueOf(value));
                 }
             }
         });
@@ -71,11 +79,10 @@ public class MainFragment extends FragmentManager {
         btnDelPayee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView txtNumPayees = (TextView) getView().findViewById(R.id.input_num_payees);
-                int value = Integer.parseInt(txtNumPayees.getText().toString());
+                int value = Integer.parseInt(txtViewNumPayees.getText().toString());
                 if (value > 1) {
                     value--;
-                    txtNumPayees.setText(String.valueOf(value));
+                    txtViewNumPayees.setText(String.valueOf(value));
                 }
             }
         });
@@ -96,9 +103,21 @@ public class MainFragment extends FragmentManager {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                resetAllInputs();
             }
         });
+    }
+
+    public void setDefaultTipPercentage() {
+        Boolean isChecked = sharedPreferences.getBoolean("@string/pref_default_tip_percent_checkbox", true);
+        int defaultTipPercentage = sharedPreferences.getInt("@string/pref_default_tip_percent", 10);
+
+        if (isChecked) {
+            editTxtTipPercentage.setText(Integer.toString(defaultTipPercentage));
+        } else {
+            editTxtTipPercentage.setText("");
+            txtLayoutTipPercentage.setErrorEnabled(false);
+        }
     }
 
     private class CustomTextWatcher implements TextWatcher {
@@ -159,5 +178,12 @@ public class MainFragment extends FragmentManager {
             txtLayoutTipPercentage.setErrorEnabled(false);
         }
         return true;
+    }
+
+    private void resetAllInputs() {
+        editTxtTotalDistance.setText("");
+        txtLayoutTotalDistance.setErrorEnabled(false);
+        editTxtTipPercentage.setText(R.string.default_tip);
+        txtViewNumPayees.setText(R.string.num_people_paying_default);
     }
 }

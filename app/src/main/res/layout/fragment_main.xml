@@ -131,8 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="@string/tip_percent"
-                android:text="@string/default_tip"/>
+                android:hint="@string/tip_percent"/>
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout

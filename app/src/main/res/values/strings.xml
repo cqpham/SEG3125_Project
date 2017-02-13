@@ -54,6 +54,11 @@
     <string name="we_suggest">Based on your quality of experience, we suggest a tip percentage of</string>
     <string name="submit">Submit</string>
 
+    <string name="pref_default_tip_percent">pref_default_tip_percent</string>
+    <string name="pref_default_perKilo_price">pref_default_perKilo_price</string>
+    <string name="pref_currency">pref_currency</string>
+    <string name="pref_default_tip_percent_checkbox">pref_default_tip_percent_checkbox</string>
+
     <string name="err_msg_invalid">Input cannot be empty.</string>
     <string name="err_msg_negVal">Input cannot be a negative value.</string>
     <string name="err_msg_zero">Input cannot be zero.</string>
