@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_suggest_atip"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context="com.cpham.lab1_android.SuggestATipActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout
@@ -21,10 +22,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
             android:orientation="vertical"
-            android:layout_gravity="center">
+            android:gravity="center_horizontal"
+            android:padding="30dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -53,43 +55,78 @@
                 android:text="@string/quality_experience_desc"
                 android:layout_marginBottom="15dp"/>
 
-            <LinearLayout
+            <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:rating="0.0"
+                android:id="@+id/ratingBar"/>
 
-                <ImageButton
-                    android:layout_width="wrap_content"
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/submit_rating"
+                android:text="@string/submit"
+                android:layout_marginBottom="15dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/tipSuggestLayout"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star_border_black_24dp"
-                    android:scaleType="fitXY"
-                    android:id="@+id/star_1"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
+                    android:text="@string/we_suggest"
+                    android:layout_marginBottom="8dp" />
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star_border_black_24dp"
-                    android:scaleType="fitXY"
-                    android:id="@+id/star_2"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star_border_black_24dp"
-                    android:scaleType="fitXY"
-                    android:id="@+id/star_3"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star_border_black_24dp"
-                    android:scaleType="fitXY"
-                    android:id="@+id/star_4"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star_border_black_24dp"
-                    android:scaleType="fitXY"
-                    android:id="@+id/star_5"/>
+                    android:id="@+id/tipSuggestResult"
+                    android:text="@string/default_tip"
+                    android:textSize="30sp"
+                    android:gravity="center"/>
             </LinearLayout>
+
+                <!--<LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_border_black_24dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/star_1"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_border_black_24dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/star_2"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_border_black_24dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/star_3"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_border_black_24dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/star_4"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_border_black_24dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/star_5"/>
+                </LinearLayout>-->
         </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

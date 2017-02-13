@@ -46,9 +46,11 @@
 
     <string name="suggest_a_tip">Suggest a Tip</string>
     <string name="tip_desc">A tip is a small amount of money given voluntarily as a token of appreciation for a service rendered. It is common to tip after receiving a service, but it is not required.</string>
-    <string name="what_is_tip">What is a Tip?</string>
+    <string name="what_is_tip">What is a tip?</string>
     <string name="how_to_tip">What percentage of tip should I use?</string>
     <string name="quality_experience">Quality of experience</string>
     <string name="tip_suggestion">Percentage of tip suggestion</string>
     <string name="quality_experience_desc">Rate your quality of experience below.</string>
+    <string name="we_suggest">Based on your quality of experience, we suggest a tip percentage of</string>
+    <string name="submit">Submit</string>
 </resources>

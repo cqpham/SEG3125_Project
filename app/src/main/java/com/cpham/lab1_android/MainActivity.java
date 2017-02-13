@@ -122,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displaySummary(View view) {
+        //calculate inputs
+        calculate();
+
         //display summary view fragment
         displayView(2);
         enableUpButton();
@@ -140,5 +143,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void disableUpButton() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    private void calculate() {
+
     }
 }
