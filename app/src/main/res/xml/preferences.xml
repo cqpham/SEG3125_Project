@@ -12,7 +12,6 @@
         android:dialogTitle="@string/default_tip_percentage_title"
         android:title="@string/default_tip_percentage_title"
         android:summary="@string/default_tip_percentage_title"
-        android:defaultValue="@string/default_tip"
         android:inputType="number"/>
 
     <ListPreference

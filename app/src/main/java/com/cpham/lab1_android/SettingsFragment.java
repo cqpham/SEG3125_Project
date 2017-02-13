@@ -20,32 +20,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
 
     SharedPreferences sharedPreferences;
 
-    private OnItemCheckedListener listener;
 
     public SettingsFragment() {
 
     }
 
-    public interface OnItemCheckedListener {
-        public void onItemChecked();
-    }
 
     @Override
     public void onCreatePreferencesFix (Bundle bundle, String s) {
         //Load preferences from preferences.xml
         addPreferencesFromResource(R.xml.preferences);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (context instanceof OnItemCheckedListener) {
-            listener = (OnItemCheckedListener) context;
-        } else {
-            throw new ClassCastException(context.toString()
-                    + " must implement SettingsFragment.OnItemCheckedListener");
-        }
     }
 
     @Override
@@ -85,10 +69,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         updatePreferences(preference);
     }
 
-    public void onCheck(View v) {
-        listener.onItemChecked();
-    }
-
     private void updatePreferences(Preference preference) {
         // and if it's an instance of EditTextPreference class, update its summary
         if (preference instanceof EditTextPreference) {
@@ -106,7 +86,22 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     }
 
     private void updateListSummary (ListPreference preference) {
+        Preference kiloPricepreference = findPreference("pref_default_perKilo_price");
         preference.setSummary(preference.getEntry());
+        switch (preference.getValue()) {
+            case "usd":
+                kiloPricepreference.setSummary("0.75");
+                break;
+            case "cad":
+                kiloPricepreference.setSummary("0.54");
+                break;
+            case "euro":
+                kiloPricepreference.setSummary("0.22");
+                break;
+            case "pnd":
+                kiloPricepreference.setSummary("0.34");
+                break;
+        }
     }
 
     private void updateCheckBoxSummary(CheckBoxPreference preference) {

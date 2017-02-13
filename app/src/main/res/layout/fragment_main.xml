@@ -192,7 +192,6 @@
                 android:id="@+id/calculate_trip"
                 android:text="@string/calculate"
                 android:textStyle="bold"
-                android:onClick="displaySummary"
                 android:layout_marginLeft="16dp"/>
         </LinearLayout>
     </LinearLayout>

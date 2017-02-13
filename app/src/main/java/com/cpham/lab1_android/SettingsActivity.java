@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 import static com.cpham.lab1_android.R.xml.preferences;
 
-public class SettingsActivity extends AppCompatActivity implements SettingsFragment.OnItemCheckedListener {
+public class SettingsActivity extends AppCompatActivity {
 
     public static final String PREFS_NAME = "pref_file";
     private Toolbar mainToolbar;
@@ -41,15 +41,8 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
 
         //get access to preferences fragment by id
         fragment = (SettingsFragment) getSupportFragmentManager().findFragmentById(R.id.pref_fragment);
-        
 
-    }
 
-    @Override
-    public void onItemChecked() {
-        if (fragment != null && fragment.isInLayout()) {
-
-        }
     }
 
 /*    @Override

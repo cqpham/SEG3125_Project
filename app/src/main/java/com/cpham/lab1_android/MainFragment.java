@@ -1,5 +1,6 @@
 package com.cpham.lab1_android;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -24,8 +25,26 @@ public class MainFragment extends FragmentManager {
 
     private SharedPreferences sharedPreferences;
 
+    OnCalculateBtnListener mCallback;
+
     public MainFragment() {
         super();
+    }
+
+    public interface OnCalculateBtnListener {
+        public void onBtnClick(String totalDistance, String tipPercentage, String numPayees);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnCalculateBtnListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() +
+                        " must implement OnCalculateBtnListener");
+        }
     }
 
     @Override
@@ -62,6 +81,12 @@ public class MainFragment extends FragmentManager {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setDefaultTipPercentage();
+    }
+
     public void addListenerAddBtn() {
         btnAddPayee.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +118,10 @@ public class MainFragment extends FragmentManager {
             @Override
             public void onClick(View v) {
                 if (validateDistance() && validateTipPercent()) {
-                    ((MainActivity) getActivity()).displaySummary(getView());
+                    //((MainActivity) getActivity()).displaySummary(getView());
+                    mCallback.onBtnClick(editTxtTotalDistance.getText().toString(),
+                                        editTxtTipPercentage.getText().toString(),
+                                        txtViewNumPayees.getText().toString());
                 }
             }
         });
@@ -109,11 +137,11 @@ public class MainFragment extends FragmentManager {
     }
 
     public void setDefaultTipPercentage() {
-        Boolean isChecked = sharedPreferences.getBoolean("@string/pref_default_tip_percent_checkbox", true);
-        int defaultTipPercentage = sharedPreferences.getInt("@string/pref_default_tip_percent", 10);
+        Boolean isChecked = sharedPreferences.getBoolean("pref_default_tip_percent_checkbox", true);
+        String defaultTipPercentage = sharedPreferences.getString("pref_default_tip_percent", "");
 
         if (isChecked) {
-            editTxtTipPercentage.setText(Integer.toString(defaultTipPercentage));
+            editTxtTipPercentage.setText(defaultTipPercentage);
         } else {
             editTxtTipPercentage.setText("");
             txtLayoutTipPercentage.setErrorEnabled(false);

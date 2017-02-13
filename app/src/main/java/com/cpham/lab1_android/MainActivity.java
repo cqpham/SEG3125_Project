@@ -1,10 +1,14 @@
 package com.cpham.lab1_android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.icu.text.DecimalFormat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +20,11 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainFragment.OnCalculateBtnListener {
 
     private Toolbar mainToolbar;
     private ImageButton btnAddPayee, btnDelPayee;
+    SharedPreferences preference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        preference = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
@@ -83,6 +90,48 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onBtnClick(String totalDistance, String tipPercentage, String numPayees) {
+        SummaryFragment summaryFragment = (SummaryFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_summary);
+        if (summaryFragment != null) {
+
+        } else {
+            SummaryFragment newSummaryFragment = new SummaryFragment();
+            String fragmentName = "summary";
+            Bundle args = new Bundle();
+            args.putString("total_amount", calculateTotalAmount(totalDistance, tipPercentage));
+            newSummaryFragment.setArguments(args);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.container_body, newSummaryFragment, fragmentName);
+            transaction.addToBackStack(fragmentName);
+
+            // Commit the transaction
+            transaction.commit();
+        }
+    }
+
+    /*@Override
+    public void onResume() {
+        super.onResume();
+        FragmentManager fm = getSupportFragmentManager();
+        MainFragment fragment = (MainFragment) fm.findFragmentById(R.id.fragment_main);
+        if (fragment != null && fragment.isVisible()) {
+            //do something
+        }
+    }*/
+
+    private String calculateTotalAmount(String totalDistance, String tipPercentage) {
+        Double totalDistanceAmount, totalTipAmount, total;
+        String kiloPrice = preference.getString("pref_default_perKilo_price", "3");
+        totalDistanceAmount = (Double.parseDouble(totalDistance)*Double.parseDouble(kiloPrice));
+        totalTipAmount = (Double.parseDouble(tipPercentage) * totalDistanceAmount);
+        total = totalDistanceAmount + totalTipAmount;
+        return total.toString();
     }
 
     private void displayView(int position) {
