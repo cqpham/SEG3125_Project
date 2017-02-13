@@ -22,11 +22,19 @@
             android:name=".SettingsActivity"
             android:label="@string/settings_menu"
             android:launchMode="singleTop">
-            <!--android:parentActivityName="com.cpham.lab1_android.MainActivity" >
+
+            <!--
+            android:parentActivityName="com.cpham.lab1_android.MainActivity" >
             &lt;!&ndash; Parent activity meta-data to support 4.0 and lower &ndash;&gt;
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cpham.lab1_android.MainActivity" />-->
+                android:value="com.cpham.lab1_android.MainActivity" />
+            -->
+        </activity>
+        <activity android:name=".SuggestATipActivity"
+            android:label="@string/suggest_a_tip"
+            android:launchMode="singleTop">
+
         </activity>
     </application>
 

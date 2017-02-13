@@ -4,8 +4,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
+//import android.support.v7.preference.PreferenceFragmentCompat;
+import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 
 import java.util.Map;
 
@@ -18,7 +20,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     }
 
     @Override
-    public void onCreatePreferences (Bundle bundle, String s) {
+    public void onCreatePreferencesFix (Bundle bundle, String s) {
         //Load preferences from preferences.xml
         addPreferencesFromResource(R.xml.preferences);
     }
@@ -63,12 +65,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     private void updatePreferences(Preference preference) {
         // and if it's an instance of EditTextPreference class, update its summary
         if (preference instanceof EditTextPreference) {
-            updateSummary((EditTextPreference) preference);
+            updateEditTextSummary((EditTextPreference) preference);
+        } else if (preference  instanceof ListPreference) {
+            updateListSummary((ListPreference) preference);
         }
     }
 
-    private void updateSummary(EditTextPreference preference) {
+    private void updateEditTextSummary(EditTextPreference preference) {
         // set the EditTextPreference's summary value to its current text
         preference.setSummary(preference.getText());
+    }
+
+    private void updateListSummary (ListPreference preference) {
+        preference.setSummary(preference.getEntry());
     }
 }

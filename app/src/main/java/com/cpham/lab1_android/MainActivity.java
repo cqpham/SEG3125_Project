@@ -73,10 +73,15 @@ public class MainActivity extends AppCompatActivity {
         as you specify a parent activity in AndroidManifest.xml.
          */
         int id = item.getItemId();
+        Intent intent;
 
         switch (id) {
             case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_suggestATip:
+                intent = new Intent(this, SuggestATipActivity.class);
                 startActivity(intent);
                 return true;
         }

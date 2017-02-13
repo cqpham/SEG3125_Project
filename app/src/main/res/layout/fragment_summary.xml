@@ -120,6 +120,7 @@
             android:id="@+id/calculate_again"
             android:text="@string/calculate_again"
             android:layout_gravity="center|center_horizontal"
-            android:onClick="displayMain"/>
+            android:onClick="displayMain"
+            android:textStyle="bold"/>
     </LinearLayout>
 </LinearLayout>

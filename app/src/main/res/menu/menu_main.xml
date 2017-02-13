@@ -9,4 +9,9 @@
         android:title="@string/settings_menu"
         android:orderInCategory="1"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_suggestATip"
+        android:title="@string/how_to_tip_title"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
 </menu>
