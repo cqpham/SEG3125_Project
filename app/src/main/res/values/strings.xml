@@ -53,4 +53,10 @@
     <string name="quality_experience_desc">Rate your quality of experience below.</string>
     <string name="we_suggest">Based on your quality of experience, we suggest a tip percentage of</string>
     <string name="submit">Submit</string>
+
+    <string name="err_msg_invalid">Input cannot be empty.</string>
+    <string name="err_msg_negVal">Input cannot be a negative value.</string>
+    <string name="err_msg_zero">Input cannot be zero.</string>
+    <string name="err_msg_distExceed">Distance cannot exceed 10,000 km.</string>
+    <string name="err_msg_tipExceed">Tip percentage cannot exceed 100%.</string>
 </resources>

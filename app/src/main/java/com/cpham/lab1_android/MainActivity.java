@@ -1,11 +1,8 @@
 package com.cpham.lab1_android;
 
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,12 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mainToolbar;
-    private TextInputLayout inputLayoutTipPercent, inputLayoutTotalDistance;
-    private EditText inputTipPercent, inputTotalDistance;
+    private ImageButton btnAddPayee, btnDelPayee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,6 @@ public class MainActivity extends AppCompatActivity {
         //Set up tool bar
         mainToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mainToolbar);
-
-        inputLayoutTipPercent = (TextInputLayout) findViewById(R.id.input_layout_tipPercent);
-        inputLayoutTotalDistance = (TextInputLayout) findViewById(R.id.input_layout_totalDistance);
-        inputTipPercent = (EditText) findViewById(R.id.input_tipPercent);
-        inputTotalDistance = (EditText) findViewById(R.id.input_totalDistance);
 
         //display first fragment view on activity
         displayView(0);
@@ -122,9 +118,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displaySummary(View view) {
-        //calculate inputs
-        calculate();
-
         //display summary view fragment
         displayView(2);
         enableUpButton();
@@ -137,15 +130,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void addPayee(View view) {
+        TextView txtNumPayees = (TextView) findViewById(R.id.input_num_payees);
+        int value = Integer.parseInt(txtNumPayees.getText().toString());
+        if (value <= 10) {
+            value++;
+            txtNumPayees.setText(value);
+        }
+    }
+
     private void enableUpButton() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void disableUpButton() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-    }
-
-    private void calculate() {
-
     }
 }

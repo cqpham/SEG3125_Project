@@ -157,14 +157,15 @@
                     android:layout_height="wrap_content"
                     android:minWidth="88dp"
                     android:src="@drawable/ic_remove_black_24dp"
-                    android:id="@+id/subPayee"/>
+                    android:id="@+id/subPayee" />
 
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textSize="16sp"
-                    android:text="@string/num_people_paying_default"/>
+                    android:textSize="20sp"
+                    android:text="@string/num_people_paying_default"
+                    android:id="@+id/input_num_payees"/>
 
                 <ImageButton
                     android:layout_width="88dp"
