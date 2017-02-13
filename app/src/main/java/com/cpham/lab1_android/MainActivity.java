@@ -100,7 +100,16 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnCa
             SummaryFragment newSummaryFragment = new SummaryFragment();
             String fragmentName = "summary";
             Bundle args = new Bundle();
-            args.putString("total_amount", calculateTotalAmount(totalDistance, tipPercentage));
+
+            double totalTripAmount = calculateTripAmount(Double.parseDouble(totalDistance));
+            double totalTipAmount = calculateTipAmount(totalTripAmount, Double.parseDouble(tipPercentage));
+            double totalAmount = calculateTotalAmount(totalTripAmount, totalTipAmount);
+            double amountPerPayee = calculateAmountPerPayee(totalAmount, Double.parseDouble(numPayees));
+            args.putString("total_amount", String.format("%.2f", totalAmount));
+            args.putString("total_trip_amount", String.format("%.2f", totalTripAmount));
+            args.putString("total_tip_amount", String.format("%.2f", totalTipAmount));
+            args.putString("num_payees", numPayees);
+            args.putString("amount_per_payee", String.format("%.2f", amountPerPayee));
             newSummaryFragment.setArguments(args);
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -115,23 +124,21 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnCa
         }
     }
 
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        FragmentManager fm = getSupportFragmentManager();
-        MainFragment fragment = (MainFragment) fm.findFragmentById(R.id.fragment_main);
-        if (fragment != null && fragment.isVisible()) {
-            //do something
-        }
-    }*/
+    private double calculateTripAmount(double totalDistance) {
+        String kiloPrice = preference.getString("pref_default_perKilo_price", "0.54");
+        return totalDistance * Double.parseDouble(kiloPrice);
+    }
 
-    private String calculateTotalAmount(String totalDistance, String tipPercentage) {
-        Double totalDistanceAmount, totalTipAmount, total;
-        String kiloPrice = preference.getString("pref_default_perKilo_price", "3");
-        totalDistanceAmount = (Double.parseDouble(totalDistance)*Double.parseDouble(kiloPrice));
-        totalTipAmount = (Double.parseDouble(tipPercentage) * totalDistanceAmount);
-        total = totalDistanceAmount + totalTipAmount;
-        return total.toString();
+    private double calculateTipAmount(double totalTripAmount, double tip) {
+        return totalTripAmount * (tip/100);
+    }
+
+    private double calculateTotalAmount(double totalTripAmount, double totalTipAmount) {
+        return totalTipAmount + totalTripAmount;
+    }
+
+    private double calculateAmountPerPayee(double totalAmount, double numPayees) {
+        return totalAmount/numPayees;
     }
 
     private void displayView(int position) {

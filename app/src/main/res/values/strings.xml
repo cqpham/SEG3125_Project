@@ -3,7 +3,7 @@
     <string name="settings_menu">Settings</string>
     <string name="search_menu">Search</string>
     <string name="how_to_tip_title">How to tip</string>
-    <string name="total_trip_distance">Total trip distance</string>
+    <string name="total_trip_distance">Total trip distance (km)</string>
     <string name="tip_percent">Tip percentage (%)</string>
     <string name="default_tip">10</string>
     <string-array name="distance_measure_array">
@@ -43,6 +43,8 @@
         <item>0.22</item>
         <item>45</item>
     </string-array>
+    <string name="cad">CAD</string>
+    <string name="usd">USD</string>
 
     <string name="suggest_a_tip">Suggest a Tip</string>
     <string name="tip_desc">A tip is a small amount of money given voluntarily as a token of appreciation for a service rendered. It is common to tip after receiving a service, but it is not required.</string>

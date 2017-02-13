@@ -29,6 +29,7 @@
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"
-        android:focusableInTouchMode="false" />
+        android:focusableInTouchMode="false"
+        android:summary="0.54"/>
 
 </android.support.v7.preference.PreferenceScreen>

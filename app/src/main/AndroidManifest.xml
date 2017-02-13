@@ -32,7 +32,7 @@
             -->
         </activity>
         <activity android:name=".SuggestATipActivity"
-            android:label="@string/suggest_a_tip"
+            android:label="@string/how_to_tip_title"
             android:launchMode="singleTop">
 
         </activity>
