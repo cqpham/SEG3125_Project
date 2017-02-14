@@ -123,5 +123,6 @@
             android:layout_gravity="center|center_horizontal"
             android:onClick="displayMain"
             android:textStyle="bold"/>
+
     </LinearLayout>
 </LinearLayout>
