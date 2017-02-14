@@ -2,36 +2,127 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/total_amount_title"
-        android:text="@string/total_amount_title"
-        android:textSize="24sp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/total_amount"
-        android:text="@string/default_amount"
-        android:textSize="56sp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/summary_title"
-        android:text="@string/summary_title"
-        android:textSize="16sp"/>
+    android:gravity="center"
+    android:id="@+id/fragment_summary">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-        <include
-            android:id="@+id/recycler_view_summary"
-            layout="@layout/summary_list"/>
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_amount_title"
+            android:text="@string/total_amount_title"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_amount"
+            android:text="@string/default_amount"
+            android:textSize="56sp"
+            android:layout_marginBottom="20dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/price_per_payee_layout"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/summary_price_per_payee"
+                android:text="@string/price_per_payee"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/summary_price_per_payee_value"
+                android:text="@string/default_amount"
+                android:textSize="34sp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_height="1dp"
+            android:layout_width="fill_parent"
+            android:background="?android:attr/listDivider"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/summary_title"
+            android:text="@string/summary_title"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"/>
+
+        <TableLayout
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/summary_table"
+            android:stretchColumns="*"
+            android:layout_marginBottom="16dp">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/summary_row_1"
+                android:paddingBottom="2dp">
+                <TextView
+                    android:id="@+id/total_trip_cost"
+                    android:text="@string/total_trip_cost"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/total_trip_cost_value"
+                    android:text="@string/default_amount"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"/>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/summary_row_2"
+                android:paddingTop="2dp">
+                <TextView
+                    android:id="@+id/total_tip_cost"
+                    android:text="@string/total_tip_cost"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/total_tip_cost_value"
+                    android:text="@string/default_amount"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"/>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/calculate_again"
+            android:text="@string/calculate_again"
+            android:layout_gravity="center|center_horizontal"
+            android:onClick="displayMain"
+            android:textStyle="bold"/>
+
     </LinearLayout>
 </LinearLayout>

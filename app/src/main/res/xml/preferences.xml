@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.preference.PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pref_fragment">
 
-    <android.support.v7.preference.PreferenceCategory
-        android:title="Category 1">
+    <android.support.v7.preference.CheckBoxPreference
+        android:key="@string/pref_default_tip_percent_checkbox" />
 
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="key1"
-            android:title="Switch Preference"
-            android:summary="Switch Summary"
-            android:defaultValue="true" />
+    <EditTextPreferenceFix
+        android:key="@string/pref_default_tip_percent"
+        android:dependency="pref_default_tip_percent_checkbox"
+        android:dialogTitle="@string/default_tip_percentage_title"
+        android:title="@string/default_tip_percentage_title"
+        android:summary="@string/default_tip_percentage_title"
+        android:inputType="number"/>
 
-        <android.support.v7.preference.EditTextPreference
-            android:key="key2"
-            android:title="EditText Preference"
-            android:summary="EditText Summary"
-            android:dialogMessage="Dialog Message"
-            android:defaultValue="Default value" />
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="key3"
-            android:title="CheckBox Preference"
-            android:summary="CheckBox Summary"
-            android:defaultValue="true"/>
-    </android.support.v7.preference.PreferenceCategory>
+    <ListPreference
+        android:key="@string/pref_currency"
+        android:title="@string/currency"
+        android:entries="@array/currency_array"
+        android:entryValues="@array/currency_array_data"
+        android:defaultValue="2"
+        android:persistent="true"
+        android:summary="ddd"/>
+
+    <Preference
+        android:key="@string/pref_default_perKilo_price"
+        android:title="@string/per_kilo_price"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:summary="0.54"/>
 
 </android.support.v7.preference.PreferenceScreen>

@@ -2,8 +2,8 @@
     <string name="app_name">Rideshare</string>
     <string name="settings_menu">Settings</string>
     <string name="search_menu">Search</string>
-    <string name="tip_suggest">Tip Suggestion</string>
-    <string name="total_trip_distance">Total trip distance</string>
+    <string name="how_to_tip_title">How to tip</string>
+    <string name="total_trip_distance">Total trip distance (km)</string>
     <string name="tip_percent">Tip percentage (%)</string>
     <string name="default_tip">10</string>
     <string-array name="distance_measure_array">
@@ -12,21 +12,58 @@
     </string-array>
     <string name="num_people_paying">How many people will be paying?</string>
     <string name="calculate">CALCULATE</string>
+    <string name="reset">RESET</string>
     <string name="num_people_paying_default">1</string>
     <string name="summary_title">Summary</string>
     <string name="total_amount_title">Total Amount</string>
     <string name="default_amount">$0.00</string>
     <string name="dollar_sign">$</string>
-
-    <string-array name="listArray">
-        <item>Headings</item>
-        <item>Headings and Details</item>
-        <item>All Data</item>
+    <string name="total_trip_cost">Total Trip Cost</string>
+    <string name="total_tip_cost">Total Tip Cost</string>
+    <string name="price_per_payee">Price Per Payee</string>
+    <string name="calculate_again">CALCULATE FOR ANOTHER TRIP</string>
+    <string name="default_tip_percentage_title">Default tip percentage (%)</string>
+    <string name="currency">Currency</string>
+    <string-array name="currency_array">
+        <item>US Dollar</item>
+        <item>Canadian Dollar</item>
+        <item>Euro</item>
+        <item>Pound</item>
     </string-array>
-
-    <string-array name="listValues">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+    <string-array name="currency_array_data">
+        <item>usd</item>
+        <item>cad</item>
+        <item>euro</item>
+        <item>pnd</item>
     </string-array>
+    <string name="per_kilo_price">Per-kilometer price</string>
+    <string-array name="per_kilo_price_array">
+        <item>0.75</item>
+        <item>0.54</item>
+        <item>0.22</item>
+        <item>45</item>
+    </string-array>
+    <string name="cad">CAD</string>
+    <string name="usd">USD</string>
+
+    <string name="suggest_a_tip">Suggest a Tip</string>
+    <string name="tip_desc">A tip is a small amount of money given voluntarily as a token of appreciation for a service rendered. It is common to tip after receiving a service, but it is not required.</string>
+    <string name="what_is_tip">What is a tip?</string>
+    <string name="how_to_tip">What percentage of tip should I use?</string>
+    <string name="quality_experience">Quality of experience</string>
+    <string name="tip_suggestion">Percentage of tip suggestion</string>
+    <string name="quality_experience_desc">Rate your quality of experience below.</string>
+    <string name="we_suggest">Based on your quality of experience, we suggest a tip percentage of</string>
+    <string name="submit">Submit</string>
+
+    <string name="pref_default_tip_percent">pref_default_tip_percent</string>
+    <string name="pref_default_perKilo_price">pref_default_perKilo_price</string>
+    <string name="pref_currency">pref_currency</string>
+    <string name="pref_default_tip_percent_checkbox">pref_default_tip_percent_checkbox</string>
+
+    <string name="err_msg_invalid">Input cannot be empty.</string>
+    <string name="err_msg_negVal">Input cannot be a negative value.</string>
+    <string name="err_msg_zero">Input cannot be zero.</string>
+    <string name="err_msg_distExceed">Distance cannot exceed 10,000 km.</string>
+    <string name="err_msg_tipExceed">Tip percentage cannot exceed 100%.</string>
 </resources>

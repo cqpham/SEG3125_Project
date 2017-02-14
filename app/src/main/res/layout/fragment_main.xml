@@ -1,101 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="16dp">
-&lt;!&ndash;        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar2" />&ndash;&gt;
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/total_trip_distance"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp"
-            android:textSize="12sp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:inputType="numberDecimal"
-                android:hint="something"
-                android:textSize="16sp"
-                android:paddingBottom="8dp" />
-            <Spinner
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/distance_measure_spinner"
-                android:entries="@array/distance_measure_array"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tip_percent"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="@string/default_tip"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/num_people_paying"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="Adult"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="-"
-                android:id="@+id/subPayee"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="+"
-                android:id="@+id/addPayee"/>
-        </LinearLayout>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:text="@string/calculate"
-            android:id="@+id/calculate"/>
-    </LinearLayout>
-</RelativeLayout>-->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/fragment_main">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,16 +14,11 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:focusableInTouchMode="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="30dp">
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_totalDistance"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp">
                 <EditText
                     android:id="@+id/input_totalDistance"
                     android:layout_width="match_parent"
@@ -122,13 +26,6 @@
                     android:inputType="numberDecimal"
                     android:hint="@string/total_trip_distance"/>
             </android.support.design.widget.TextInputLayout>
-            <Spinner
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:id="@+id/distance_measure_spinner"
-                android:entries="@array/distance_measure_array"/>
-        </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_tipPercent"
@@ -140,9 +37,8 @@
                 android:id="@+id/input_tipPercent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="@string/tip_percent"
-                android:text="@string/default_tip"/>
+                android:inputType="number"
+                android:hint="@string/tip_percent"/>
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
@@ -167,14 +63,15 @@
                     android:layout_height="wrap_content"
                     android:minWidth="88dp"
                     android:src="@drawable/ic_remove_black_24dp"
-                    android:id="@+id/subPayee"/>
+                    android:id="@+id/subPayee" />
 
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textSize="16sp"
-                    android:text="@string/num_people_paying_default"/>
+                    android:textSize="20sp"
+                    android:text="@string/num_people_paying_default"
+                    android:id="@+id/input_num_payees"/>
 
                 <ImageButton
                     android:layout_width="88dp"
@@ -187,12 +84,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
             <Button
                 android:layout_width="120dp"
                 android:layout_height="50dp"
+                android:id="@+id/reset_trip"
+                android:text="@string/reset"
+                android:textStyle="bold"
+                android:layout_marginRight="16dp" />
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:id="@+id/calculate_trip"
                 android:text="@string/calculate"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginLeft="16dp" />
         </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
