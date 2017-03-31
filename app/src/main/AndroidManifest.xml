@@ -31,11 +31,14 @@
                 android:value="com.cpham.lab1_android.MainActivity" />
             -->
         </activity>
-        <activity android:name=".SuggestATipActivity"
+        <activity
+            android:name=".SuggestATipActivity"
             android:label="@string/how_to_tip_title"
-            android:launchMode="singleTop">
-
-        </activity>
+            android:launchMode="singleTop"></activity>
+        <activity
+            android:name="seg3125.project.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/MDAppTheme"></activity>
     </application>
 
 </manifest>
