@@ -4,15 +4,16 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.content.DialogInterface;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.widget.TimePicker;
 
 public class MainActivity extends AppCompatActivity {
-
-    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Dialog Title");
         builder.setMessage("Dialog Message");
 
+        LayoutInflater inflater = getLayoutInflater();
+
         String positiveText = getString(android.R.string.ok);
+        builder.setView(inflater.inflate(R.layout.create_task, null));
         builder.setPositiveButton(positiveText,
                 new DialogInterface.OnClickListener() {
                     @Override
