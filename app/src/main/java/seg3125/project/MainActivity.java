@@ -7,9 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.content.DialogInterface;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.support.v7.app.AlertDialog.Builder;
+import android.support.v7.app.AlertDialog;
 
 public class MainActivity extends AppCompatActivity {
 
