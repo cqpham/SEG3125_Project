@@ -6,8 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
-import com.cpham.lab1_android.R;
+import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,4 +27,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        //Inflate the menu -> this adds items to the action bar
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
 }
