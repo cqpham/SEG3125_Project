@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.content.DialogInterface;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,13 +41,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Dialog Title");
-        builder.setMessage("Dialog Message");
+        builder.setTitle(R.string.task_create);
 
         LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.create_task, null);
+        builder.setView(dialogView);
+
+        NumberPicker hrPicker = (NumberPicker) dialogView.findViewById(R.id.hrPicker);
+        hrPicker.setMinValue(0);
+        hrPicker.setMaxValue(12);
+        hrPicker.setWrapSelectorWheel(true);
+
+        NumberPicker minPicker = (NumberPicker) dialogView.findViewById(R.id.minPicker);
+        minPicker.setMinValue(0);
+        minPicker.setMaxValue(59);
+        minPicker.setWrapSelectorWheel(true);
 
         String positiveText = getString(android.R.string.ok);
-        builder.setView(inflater.inflate(R.layout.create_task, null));
         builder.setPositiveButton(positiveText,
                 new DialogInterface.OnClickListener() {
                     @Override

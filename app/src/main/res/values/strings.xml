@@ -2,6 +2,7 @@
     <string name="app_name">Tasky</string>
     <string name="title_activity_main">MainActivity</string>
 
+    <string name="task_create">Create a task</string>
     <string name="task_name">Task Name</string>
     <string name="task_duration">Task Duration</string>
 </resources>
