@@ -1,7 +1,9 @@
 package seg3125.project;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
@@ -80,5 +82,21 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         // display dialog
         dialog.show();
+    }
+
+    public class CustomCountDownTimer extends CountDownTimer {
+        public CustomCountDownTimer (long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick (long millisUntilFinished) {
+
+        }
+
+        @Override
+        public void onFinish() {
+
+        }
     }
 }
