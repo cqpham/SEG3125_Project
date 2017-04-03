@@ -1,5 +1,7 @@
 package seg3125.project;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
@@ -14,18 +16,23 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.support.design.widget.Snackbar;
 
-import org.w3c.dom.Text;
-
-import java.util.concurrent.TimeUnit;
-
 public class MainActivity extends AppCompatActivity {
 
     private TextView countdownText;
+    private long taskDurationMilliseconds, taskDurationMinutes;
+    private final String[] minArray = {"5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        int defaultLevelValue = getResources().getInteger(R.integer.saved_level_default);
+        long level = sharedPreferences.getInt(getString(R.string.saved_level), defaultLevelValue);
+        int defaultPointsEarnedValue = getResources().getInteger(R.integer.points_earned_default);
+        long pointsEarned = sharedPreferences.getInt(getString(R.string.points_earned), defaultPointsEarnedValue);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -62,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         final NumberPicker minPicker = (NumberPicker) dialogView.findViewById(R.id.minPicker);
         minPicker.setMinValue(0);
-        minPicker.setMaxValue(59);
+        minPicker.setMaxValue(minArray.length-1);
+        minPicker.setDisplayedValues(minArray);
         minPicker.setWrapSelectorWheel(true);
 
         String positiveText = getString(android.R.string.ok);
@@ -73,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
                         // positive button logic
                         dialog.cancel();
                         //Get duration
-                        //long totalMilliseconds = hrPicker.getValue()*60*60000 + minPicker.getValue()*60000;
-                        long totalMilliseconds = 2000;
-                        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(totalMilliseconds, 1000);
+                        taskDurationMinutes = hrPicker.getValue()*60 + Integer.parseInt(minArray[minPicker.getValue()]);
+                        taskDurationMilliseconds = taskDurationMinutes*60000;
+                        //long totalMilliseconds = 2000;
+                        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(taskDurationMilliseconds, 1000);
                         customCountDownTimer.start();
-
                     }
                 });
 
@@ -103,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.finished_task, null);
         builder.setView(dialogView);
 
+        TextView earned_points_text = (TextView) dialogView.findViewById(R.id.earned_points_text);
+        Long earnedPoints = calculateXpPoints(taskDurationMinutes);
+        earned_points_text.setText(Long.toString(earnedPoints));
+        //earned_points_text.setText(R.string.earned_points + calculateXpPoints(millisInFuture) + R.string.points);
+
         String positiveText = getString(android.R.string.ok);
         builder.setPositiveButton(positiveText,
                 new DialogInterface.OnClickListener() {
@@ -113,25 +126,19 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        String negativeText = getString(android.R.string.cancel);
-        builder.setNegativeButton(negativeText,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // negative button logic
-                        dialog.cancel();
-                    }
-                });
-
         AlertDialog dialog = builder.create();
         // display dialog
         dialog.show();
     }
 
+    private long calculateXpPoints(long minutes) {
+        return minutes*100;
+    }
+
     private class CustomCountDownTimer extends CountDownTimer {
+
         public CustomCountDownTimer (long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
-            //start();
         }
 
         @Override
@@ -145,10 +152,11 @@ public class MainActivity extends AppCompatActivity {
         public void onFinish() {
             //reset timer
             countdownText.setText(R.string.timer_default);
-            //showFinishedTaskDialog();
-            Snackbar.make(findViewById(R.id.coordinatorLayout), "Congratulations!",
+            showFinishedTaskDialog();
+            /*Snackbar.make(findViewById(R.id.coordinatorLayout), "Congratulations!",
                     Snackbar.LENGTH_INDEFINITE)
                     .show();
+                    */
         }
 
         private String formatMilliseconds(long milliseconds) {
