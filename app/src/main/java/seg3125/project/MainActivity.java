@@ -16,15 +16,18 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView countdownText;
     private TextView levelText;
-    private long taskDurationMilliseconds, taskDurationMinutes;
+    private int taskDurationMilliseconds, taskDurationMinutes;
     private final String[] minArray = {"5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
-    private int defaultPointsThresholdValue, levelPointsThreshold;
-    private int defaultLevelValue, level, defaultPointsEarnedValue, pointsEarned;
+    private int defaultPointsThreshold, levelPointsThreshold;
+    private int defaultLevel, level, defaultPointsEarnedTotal, pointsEarnedTotal, defaultPointsEarnedForLevel, pointsEarnedForLevel;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private ProgressBar progressBar;
 
     @Override
@@ -33,12 +36,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        defaultLevelValue = getResources().getInteger(R.integer.saved_level_default);
-        level = sharedPreferences.getInt(getString(R.string.saved_level), defaultLevelValue);
-        defaultPointsEarnedValue = getResources().getInteger(R.integer.points_earned_default);
-        pointsEarned = sharedPreferences.getInt(getString(R.string.points_earned), defaultPointsEarnedValue);
-        defaultPointsThresholdValue = getResources().getInteger(R.integer.default_level_points_threshold);
-        levelPointsThreshold = sharedPreferences.getInt(getString(R.string.level_points_threshold), defaultPointsThresholdValue);
+        defaultLevel = getResources().getInteger(R.integer.saved_level_default);
+        level = sharedPreferences.getInt(getString(R.string.saved_level), defaultLevel);
+        defaultPointsEarnedTotal = getResources().getInteger(R.integer.points_earned_default);
+        pointsEarnedTotal = sharedPreferences.getInt(getString(R.string.points_earned), defaultPointsEarnedTotal);
+        defaultPointsThreshold = getResources().getInteger(R.integer.default_level_points_threshold);
+        levelPointsThreshold = sharedPreferences.getInt(getString(R.string.level_points_threshold), defaultPointsThreshold);
+        defaultPointsEarnedForLevel = getResources().getInteger(R.integer.default_points_earned_level);
+        pointsEarnedForLevel = sharedPreferences.getInt(getString(R.string.points_earned_level), defaultPointsEarnedForLevel);
+
+        editor = sharedPreferences.edit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.xpPointsProgressBar);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setMax(levelPointsThreshold);
-        progressBar.setProgress(pointsEarned);
+        progressBar.setProgress(pointsEarnedTotal);
 
         countdownText = (TextView) findViewById(R.id.countDownText) ;
         levelText = (TextView) findViewById(R.id.level_text);
@@ -66,6 +73,78 @@ public class MainActivity extends AppCompatActivity {
         //Inflate the menu -> this adds items to the action bar
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
+    }
+
+    private class CustomCountDownTimer extends CountDownTimer {
+
+        public CustomCountDownTimer (long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick (long millisUntilFinished) {
+            //Convert milliseconds into hours, minutes, seconds
+            String hms = formatMilliseconds(millisUntilFinished);
+            countdownText.setText(hms);
+        }
+
+        @Override
+        public void onFinish() {
+            //reset timer
+            countdownText.setText(R.string.timer_default);
+            int earnedPoints = calculateXpPoints(taskDurationMinutes);
+            pointsEarnedTotal += earnedPoints;
+            pointsEarnedForLevel += earnedPoints;
+            //NEED TO SET PREFERENCES
+
+            if (canLevelUp(earnedPoints)) {
+                level += 1;
+                levelPointsThreshold = getLevelPointsThreshold(level);
+                showLevelUpDialog();
+            } else {
+                showFinishedTaskDialog(earnedPoints);
+            }
+        }
+
+        private String formatMilliseconds(long milliseconds) {
+            long secondsInMilli = 1000;
+            long minutesInMilli = secondsInMilli * 60;
+            long hoursInMilli = minutesInMilli * 60;
+
+            long elapsedHours = milliseconds / hoursInMilli;
+            milliseconds = milliseconds % hoursInMilli;
+
+            long elapsedMinutes = milliseconds / minutesInMilli;
+            milliseconds = milliseconds % minutesInMilli;
+
+            long elapsedSeconds = milliseconds / secondsInMilli;
+
+            return String.format("%02d:%02d:%02d", elapsedHours, elapsedMinutes, elapsedSeconds);
+        }
+    }
+
+    private int calculateXpPoints(int minutes) {
+        return minutes*100;
+    }
+
+    private boolean canLevelUp(int pointsJustEarned) {
+        if (pointsJustEarned == 0) {
+            return false;
+        } else if ((pointsJustEarned + pointsEarnedTotal) == levelPointsThreshold) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private int getLevelPointsThreshold(int level) {
+        int points = R.integer.default_level_points_threshold;
+
+         for (int i = 2; i <= level; i++) {
+            points += points*i;
+         }
+
+        return points;
     }
 
     private void showCreateTaskDialog() {
@@ -97,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                         //Get duration
                         taskDurationMinutes = hrPicker.getValue()*60 + Integer.parseInt(minArray[minPicker.getValue()]);
                         taskDurationMilliseconds = taskDurationMinutes*60000;
-                        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(taskDurationMilliseconds, 1000);
+                        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(2000, 1000);
                         customCountDownTimer.start();
                     }
                 });
@@ -117,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void showFinishedTaskDialog() {
+    private void showFinishedTaskDialog(int earnedPoints) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -125,8 +204,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(dialogView);
 
         TextView earned_points_text = (TextView) dialogView.findViewById(R.id.earned_points_text);
-        Long earnedPoints = calculateXpPoints(taskDurationMinutes);
-        earned_points_text.setText(R.string.earned_points + Long.toString(earnedPoints) + R.string.points);
+        earned_points_text.setText(getResources().getString(R.string.earned_points) + " " + Integer.toString(earnedPoints) + " " + getResources().getString(R.string.points));
 
         String positiveText = getString(android.R.string.ok);
         builder.setPositiveButton(positiveText,
@@ -135,8 +213,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // positive button logic
                         dialog.cancel();
-                        level += 1;
-                        levelText.setText(R.string.level + " " + level);
                     }
                 });
 
@@ -145,53 +221,28 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private long calculateXpPoints(long minutes) {
-        return minutes*100;
-    }
+    private void showLevelUpDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-    private boolean canLevelUp(long pointsEarned) {
-        boolean bolLevelUp = false;
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.level_up, null);
+        builder.setView(dialogView);
 
-        if (pointsEarned == 0) {
-            return bolLevelUp;
-        }
-        return bolLevelUp;
-    }
+        TextView level_up_text = (TextView) dialogView.findViewById(R.id.level_up_text);
+        level_up_text.setText(getResources().getString(R.string.level_up) + " " + level + "!");
 
-    private class CustomCountDownTimer extends CountDownTimer {
+        String positiveText = getString(android.R.string.ok);
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // positive button logic
+                        dialog.cancel();
+                    }
+                });
 
-        public CustomCountDownTimer (long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick (long millisUntilFinished) {
-            //Convert milliseconds into hours, minutes, seconds
-            String hms = formatMilliseconds(millisUntilFinished);
-            countdownText.setText(hms);
-        }
-
-        @Override
-        public void onFinish() {
-            //reset timer
-            countdownText.setText(R.string.timer_default);
-            showFinishedTaskDialog();
-        }
-
-        private String formatMilliseconds(long milliseconds) {
-            long secondsInMilli = 1000;
-            long minutesInMilli = secondsInMilli * 60;
-            long hoursInMilli = minutesInMilli * 60;
-
-            long elapsedHours = milliseconds / hoursInMilli;
-            milliseconds = milliseconds % hoursInMilli;
-
-            long elapsedMinutes = milliseconds / minutesInMilli;
-            milliseconds = milliseconds % minutesInMilli;
-
-            long elapsedSeconds = milliseconds / secondsInMilli;
-
-            return String.format("%02d:%02d:%02d", elapsedHours, elapsedMinutes, elapsedSeconds);
-        }
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
     }
 }

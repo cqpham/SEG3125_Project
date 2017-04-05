@@ -13,7 +13,8 @@
     <string name="oh_yeah">Oh yeah!</string>
     <string name="earned_points">You\'ve earned</string>
     <string name="points">XP points!</string>
-    <string name="level_up">You\'ve leveled up! An item has been added to your room!</string>
+    <string name="level_up">You\'ve advanced to level</string>
+    <string name="item_added">An item has been added to your room!</string>
 
     <!-- Values for SharedPreferences -->
     <integer name="saved_level_default">1</integer>
@@ -22,4 +23,6 @@
     <string name="points_earned">0</string>
     <integer name="default_level_points_threshold">100</integer>
     <string name="level_points_threshold">100</string>
+    <integer name="default_points_earned_level">0</integer>
+    <string name="points_earned_level">0</string>
 </resources>
