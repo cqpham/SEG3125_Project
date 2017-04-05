@@ -9,12 +9,15 @@
     <string name="timer_default">00:00:00</string>
 
     <string name="congratulations">Congratulations!</string>
+    <string name="oh_yeah">Oh yeah!</string>
     <string name="earned_points">You\'ve earned</string>
     <string name="points">XP points!</string>
+    <string name="level_up">You\'ve leveled up! An item has been added to your room!</string>
 
     <!-- Values for SharedPreferences -->
     <integer name="saved_level_default">1</integer>
     <string name="saved_level">1</string>
     <integer name="points_earned_default">0</integer>
     <string name="points_earned">0</string>
+    <integer name="default_level_points_threshold">100</integer>
 </resources>

@@ -14,13 +14,13 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.support.design.widget.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView countdownText;
     private long taskDurationMilliseconds, taskDurationMinutes;
     private final String[] minArray = {"5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
+    private int levelPointsThreshold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         int defaultLevelValue = getResources().getInteger(R.integer.saved_level_default);
-        long level = sharedPreferences.getInt(getString(R.string.saved_level), defaultLevelValue);
+        int level = sharedPreferences.getInt(getString(R.string.saved_level), defaultLevelValue);
         int defaultPointsEarnedValue = getResources().getInteger(R.integer.points_earned_default);
-        long pointsEarned = sharedPreferences.getInt(getString(R.string.points_earned), defaultPointsEarnedValue);
+        int pointsEarned = sharedPreferences.getInt(getString(R.string.points_earned), defaultPointsEarnedValue);
+
+        levelPointsThreshold = getLevelPointsThreshold(level);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                         //Get duration
                         taskDurationMinutes = hrPicker.getValue()*60 + Integer.parseInt(minArray[minPicker.getValue()]);
                         taskDurationMilliseconds = taskDurationMinutes*60000;
-                        //long totalMilliseconds = 2000;
                         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(taskDurationMilliseconds, 1000);
                         customCountDownTimer.start();
                     }
@@ -113,8 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView earned_points_text = (TextView) dialogView.findViewById(R.id.earned_points_text);
         Long earnedPoints = calculateXpPoints(taskDurationMinutes);
-        earned_points_text.setText(Long.toString(earnedPoints));
-        //earned_points_text.setText(R.string.earned_points + calculateXpPoints(millisInFuture) + R.string.points);
+        earned_points_text.setText(R.string.earned_points + Long.toString(earnedPoints) + R.string.points);
 
         String positiveText = getString(android.R.string.ok);
         builder.setPositiveButton(positiveText,
@@ -135,6 +135,25 @@ public class MainActivity extends AppCompatActivity {
         return minutes*100;
     }
 
+    private boolean canLevelUp(long pointsEarned) {
+        boolean bolLevelUp = false;
+
+        if (pointsEarned == 0) {
+            return bolLevelUp;
+        }
+        return bolLevelUp;
+    }
+
+    private int getLevelPointsThreshold(int level) {
+        int points = R.integer.default_level_points_threshold;
+
+        for (int i = 2; i <= level; i++) {
+            points += points*i;
+        }
+
+        return points;
+    }
+
     private class CustomCountDownTimer extends CountDownTimer {
 
         public CustomCountDownTimer (long millisInFuture, long countDownInterval) {
@@ -153,10 +172,6 @@ public class MainActivity extends AppCompatActivity {
             //reset timer
             countdownText.setText(R.string.timer_default);
             showFinishedTaskDialog();
-            /*Snackbar.make(findViewById(R.id.coordinatorLayout), "Congratulations!",
-                    Snackbar.LENGTH_INDEFINITE)
-                    .show();
-                    */
         }
 
         private String formatMilliseconds(long milliseconds) {
