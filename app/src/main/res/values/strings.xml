@@ -21,4 +21,5 @@
     <integer name="points_earned_default">0</integer>
     <string name="points_earned">0</string>
     <integer name="default_level_points_threshold">100</integer>
+    <string name="level_points_threshold">100</string>
 </resources>

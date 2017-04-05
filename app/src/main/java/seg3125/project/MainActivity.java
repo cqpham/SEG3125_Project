@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,9 +22,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView levelText;
     private long taskDurationMilliseconds, taskDurationMinutes;
     private final String[] minArray = {"5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
-    private int levelPointsThreshold;
-    private int level, pointsEarned;
+    private int defaultPointsThresholdValue, levelPointsThreshold;
+    private int defaultLevelValue, level, defaultPointsEarnedValue, pointsEarned;
     private SharedPreferences sharedPreferences;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        int defaultLevelValue = getResources().getInteger(R.integer.saved_level_default);
+        defaultLevelValue = getResources().getInteger(R.integer.saved_level_default);
         level = sharedPreferences.getInt(getString(R.string.saved_level), defaultLevelValue);
-        int defaultPointsEarnedValue = getResources().getInteger(R.integer.points_earned_default);
+        defaultPointsEarnedValue = getResources().getInteger(R.integer.points_earned_default);
         pointsEarned = sharedPreferences.getInt(getString(R.string.points_earned), defaultPointsEarnedValue);
-
-        levelPointsThreshold = getLevelPointsThreshold(level);
+        defaultPointsThresholdValue = getResources().getInteger(R.integer.default_level_points_threshold);
+        levelPointsThreshold = sharedPreferences.getInt(getString(R.string.level_points_threshold), defaultPointsThresholdValue);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
                 showCreateTaskDialog();
             }
         });
+
+        progressBar = (ProgressBar) findViewById(R.id.xpPointsProgressBar);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setMax(levelPointsThreshold);
+        progressBar.setProgress(pointsEarned);
 
         countdownText = (TextView) findViewById(R.id.countDownText) ;
         levelText = (TextView) findViewById(R.id.level_text);
@@ -149,16 +156,6 @@ public class MainActivity extends AppCompatActivity {
             return bolLevelUp;
         }
         return bolLevelUp;
-    }
-
-    private int getLevelPointsThreshold(long level) {
-        int points = R.integer.default_level_points_threshold;
-
-        for (int i = 2; i <= level; i++) {
-            points += points*i;
-        }
-
-        return points;
     }
 
     private class CustomCountDownTimer extends CountDownTimer {
