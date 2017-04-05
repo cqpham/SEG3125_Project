@@ -18,20 +18,23 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private TextView countdownText;
+    private TextView levelText;
     private long taskDurationMilliseconds, taskDurationMinutes;
     private final String[] minArray = {"5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
     private int levelPointsThreshold;
+    private int level, pointsEarned;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         int defaultLevelValue = getResources().getInteger(R.integer.saved_level_default);
-        int level = sharedPreferences.getInt(getString(R.string.saved_level), defaultLevelValue);
+        level = sharedPreferences.getInt(getString(R.string.saved_level), defaultLevelValue);
         int defaultPointsEarnedValue = getResources().getInteger(R.integer.points_earned_default);
-        int pointsEarned = sharedPreferences.getInt(getString(R.string.points_earned), defaultPointsEarnedValue);
+        pointsEarned = sharedPreferences.getInt(getString(R.string.points_earned), defaultPointsEarnedValue);
 
         levelPointsThreshold = getLevelPointsThreshold(level);
 
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         countdownText = (TextView) findViewById(R.id.countDownText) ;
+        levelText = (TextView) findViewById(R.id.level_text);
+        levelText.setText(getResources().getString(R.string.level) + " " + String.valueOf(level));
     }
 
     @Override
@@ -123,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // positive button logic
                         dialog.cancel();
+                        level += 1;
+                        levelText.setText(R.string.level + " " + level);
                     }
                 });
 
@@ -144,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         return bolLevelUp;
     }
 
-    private int getLevelPointsThreshold(int level) {
+    private int getLevelPointsThreshold(long level) {
         int points = R.integer.default_level_points_threshold;
 
         for (int i = 2; i <= level; i++) {
