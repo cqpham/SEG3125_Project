@@ -13,13 +13,8 @@
         android:title="@string/pref_header_notifications" />
 
     <header
-        android:fragment="seg3125.project.SettingsActivity$DataSyncPreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
-        android:title="@string/pref_header_data_sync" />
-
-    <header
         android:fragment="seg3125.project.SettingsActivity$HistoryPreferenceFragment"
-        android:icon="@drawable/ic_add_black_24dp"
+        android:icon="@drawable/ic_history_black_24dp"
         android:title="@string/pref_header_history" />
 
 </preference-headers>
