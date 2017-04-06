@@ -10,11 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.content.Intent;
 
 import org.w3c.dom.Text;
 
@@ -75,6 +77,28 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        /*
+        Handle action bar item clicks here. The action bar will
+        automatically handle clicks on the Home/Up button, so long
+        as you specify a parent activity in AndroidManifest.xml.
+         */
+        int id = item.getItemId();
+        Intent intent;
+
+        switch (id) {
+            case R.id.action_settings:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_help:
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private class CustomCountDownTimer extends CountDownTimer {
 
         public CustomCountDownTimer (long millisInFuture, long countDownInterval) {
@@ -124,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int calculateXpPoints(int minutes) {
-        return minutes*100;
+        return minutes*25;
     }
 
     private boolean canLevelUp(int pointsJustEarned) {
