@@ -18,16 +18,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.content.Intent;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends AppCompatActivity {
 
-    private TextView countdownText;
+    private TextView countdownText, taskName;
     private TextView levelText;
-    private int taskDurationMilliseconds, taskDurationMinutes;
+    private int taskDurationMinutes;
     private final String[] minArray = {"5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
-    private int defaultPointsThreshold, levelPointsThreshold;
-    private int defaultLevel, level, defaultPointsEarnedTotal, pointsEarnedTotal, defaultPointsEarnedForLevel, pointsEarnedForLevel;
+    private int level, levelPointsThreshold, pointsEarnedTotal, pointsEarnedForLevel;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private ProgressBar progressBar;
@@ -38,13 +35,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        defaultLevel = getResources().getInteger(R.integer.saved_level_default);
+        int defaultLevel = getResources().getInteger(R.integer.saved_level_default);
         level = sharedPreferences.getInt(getString(R.string.saved_level), defaultLevel);
-        defaultPointsEarnedTotal = getResources().getInteger(R.integer.points_earned_default);
+        int defaultPointsEarnedTotal = getResources().getInteger(R.integer.points_earned_default);
         pointsEarnedTotal = sharedPreferences.getInt(getString(R.string.points_earned), defaultPointsEarnedTotal);
-        defaultPointsThreshold = getResources().getInteger(R.integer.default_level_points_threshold);
+        int defaultPointsThreshold = getResources().getInteger(R.integer.default_level_points_threshold);
         levelPointsThreshold = sharedPreferences.getInt(getString(R.string.level_points_threshold), defaultPointsThreshold);
-        defaultPointsEarnedForLevel = getResources().getInteger(R.integer.default_points_earned_level);
+        int defaultPointsEarnedForLevel = getResources().getInteger(R.integer.default_points_earned_level);
         pointsEarnedForLevel = sharedPreferences.getInt(getString(R.string.points_earned_level), defaultPointsEarnedForLevel);
 
         editor = sharedPreferences.edit();
@@ -65,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setMax(levelPointsThreshold);
         progressBar.setProgress(pointsEarnedTotal);
 
-        countdownText = (TextView) findViewById(R.id.countDownText) ;
+        countdownText = (TextView) findViewById(R.id.countDownText);
+        taskName = (TextView) findViewById(R.id.taskName);
         levelText = (TextView) findViewById(R.id.level_text);
         levelText.setText(getResources().getString(R.string.level) + " " + String.valueOf(level));
     }
@@ -79,11 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected (MenuItem item) {
-        /*
-        Handle action bar item clicks here. The action bar will
-        automatically handle clicks on the Home/Up button, so long
-        as you specify a parent activity in AndroidManifest.xml.
-         */
+
         int id = item.getItemId();
         Intent intent;
 
@@ -148,13 +142,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int calculateXpPoints(int minutes) {
-        return minutes*25;
+        return minutes*10;
     }
 
     private boolean canLevelUp(int pointsJustEarned) {
         if (pointsJustEarned == 0) {
             return false;
-        } else if ((pointsJustEarned + pointsEarnedTotal) == levelPointsThreshold) {
+        } else if ((pointsJustEarned + pointsEarnedForLevel) == levelPointsThreshold) {
             return true;
         }
 
@@ -197,9 +191,14 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // positive button logic
                         dialog.cancel();
+
+                        //Set task name and need to check validation
+                        TextView taskInputName = (TextView) findViewById(R.id.create_task_name);
+                        taskName.setText(taskInputName.getText());
+
                         //Get duration
                         taskDurationMinutes = hrPicker.getValue()*60 + Integer.parseInt(minArray[minPicker.getValue()]);
-                        taskDurationMilliseconds = taskDurationMinutes*60000;
+                        int taskDurationMilliseconds = taskDurationMinutes*60000;
                         CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(2000, 1000);
                         customCountDownTimer.start();
                     }
@@ -262,6 +261,13 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // positive button logic
                         dialog.cancel();
+
+                        //reset progress bar
+                        progressBar.setProgress(0);
+                        progressBar.setMax(levelPointsThreshold);
+
+                        //set level label
+                        levelText.setText(getResources().getString(R.string.level) + " " + String.valueOf(level));
                     }
                 });
 
