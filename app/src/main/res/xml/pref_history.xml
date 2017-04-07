@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:title="Finish calculus 2 assignment"
+        android:summary="Task duration = 2 hours\nPoints earned = 60"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false">
+    </Preference>
+    <Preference
+        android:title="Study for SEG3125 Final Exam"
+        android:summary="Task duration = 4 hours\nPoints earned = 120"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false">
+    </Preference>
+    <Preference
+        android:title="Work on SEG3125 project"
+        android:summary="Task duration = 4 hours\nPoints earned = 120"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false">
+    </Preference>
+</PreferenceScreen>
