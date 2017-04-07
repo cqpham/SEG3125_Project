@@ -185,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showCreateTaskDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(false);
         builder.setTitle(R.string.task_create);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -243,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showFinishedTaskDialog(int earnedPoints) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(false);
 
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.finished_task, null);
@@ -269,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showLevelUpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(false);
 
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.level_up, null);
