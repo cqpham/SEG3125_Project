@@ -32,7 +32,7 @@
 
     <ImageView
         android:id="@+id/award_image"
-        app:srcCompat="@android:color/holo_blue_light"
+        app:srcCompat="@drawable/bowling_ball"
         android:layout_width="150dp"
         android:layout_height="170dp" />
 </LinearLayout>

@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -17,17 +20,21 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.content.Intent;
+import android.widget.ImageView;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView countdownText, taskName;
     private TextView levelText;
     private int taskDurationMinutes;
-    private final String[] minArray = {"5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
+    private final String[] minArray = {"0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
     private int level, levelPointsThreshold, pointsEarnedTotal, pointsEarnedForLevel;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private ProgressBar progressBar;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,11 +120,13 @@ public class MainActivity extends AppCompatActivity {
             int earnedPoints = calculateXpPoints(taskDurationMinutes);
             pointsEarnedTotal += earnedPoints;
             pointsEarnedForLevel += earnedPoints;
-            //NEED TO SET PREFERENCES
+
+            fab.setImageResource(R.drawable.ic_add_black_24dp);
+            taskName.setText("");
 
             if (canLevelUp(earnedPoints)) {
-                level += 1;
-                levelPointsThreshold = getLevelPointsThreshold(level);
+                //level += 1;
+                //levelPointsThreshold = getLevelPointsThreshold(level);
                 showLevelUpDialog();
             } else {
                 showFinishedTaskDialog(earnedPoints);
@@ -142,21 +151,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int calculateXpPoints(int minutes) {
-        return minutes*10;
+        double value = minutes*0.5;
+        return (int) value;
     }
 
     private boolean canLevelUp(int pointsJustEarned) {
+        int pointsRemaining = pointsEarnedTotal;
         if (pointsJustEarned == 0) {
             return false;
-        } else if ((pointsJustEarned + pointsEarnedForLevel) == levelPointsThreshold) {
+        } else if (pointsEarnedTotal < levelPointsThreshold) {
+            return false;
+        } else {
+            while(pointsEarnedTotal >= levelPointsThreshold) {
+                pointsRemaining -= levelPointsThreshold;
+                level += 1;
+                levelPointsThreshold = getLevelPointsThreshold(level);
+            }
+            pointsEarnedForLevel = pointsRemaining;
             return true;
         }
 
-        return false;
     }
 
     private int getLevelPointsThreshold(int level) {
-        int points = R.integer.default_level_points_threshold;
+        int points = getResources().getInteger(R.integer.default_level_points_threshold);
 
          for (int i = 2; i <= level; i++) {
             points += points*i;
@@ -184,6 +202,8 @@ public class MainActivity extends AppCompatActivity {
         minPicker.setDisplayedValues(minArray);
         minPicker.setWrapSelectorWheel(true);
 
+        final TextView taskInputName = (TextView) dialogView.findViewById(R.id.create_task_name);
+
         String positiveText = getString(android.R.string.ok);
         builder.setPositiveButton(positiveText,
                 new DialogInterface.OnClickListener() {
@@ -193,14 +213,16 @@ public class MainActivity extends AppCompatActivity {
                         dialog.cancel();
 
                         //Set task name and need to check validation
-                        TextView taskInputName = (TextView) findViewById(R.id.create_task_name);
                         taskName.setText(taskInputName.getText());
 
                         //Get duration
                         taskDurationMinutes = hrPicker.getValue()*60 + Integer.parseInt(minArray[minPicker.getValue()]);
                         int taskDurationMilliseconds = taskDurationMinutes*60000;
-                        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(2000, 1000);
+                        CustomCountDownTimer customCountDownTimer = new CustomCountDownTimer(5000, 1000);
                         customCountDownTimer.start();
+
+                        //Change icon in floating action button to stop button
+                        fab.setImageResource(R.drawable.ic_stop_black_24dp);
                     }
                 });
 
@@ -236,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // positive button logic
                         dialog.cancel();
+                        progressBar.setProgress(pointsEarnedForLevel);
                     }
                 });
 
@@ -263,11 +286,16 @@ public class MainActivity extends AppCompatActivity {
                         dialog.cancel();
 
                         //reset progress bar
-                        progressBar.setProgress(0);
+                        if (pointsEarnedForLevel != 0) {
+                            progressBar.setProgress(pointsEarnedForLevel);
+                        }
+
                         progressBar.setMax(levelPointsThreshold);
 
                         //set level label
                         levelText.setText(getResources().getString(R.string.level) + " " + String.valueOf(level));
+
+                        pointsEarnedForLevel = 0;
                     }
                 });
 

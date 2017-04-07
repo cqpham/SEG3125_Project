@@ -13,7 +13,8 @@
             android:id="@+id/create_task_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp">
             <EditText
                 android:id="@+id/create_task_name"
                 android:layout_width="match_parent"
